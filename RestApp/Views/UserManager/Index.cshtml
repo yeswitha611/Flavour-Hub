@@ -1,0 +1,94 @@
+﻿@model List<restapp.Models.User>
+ 
+@{
+    ViewData["Title"] = "User Management";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+ 
+<style>
+    /* Custom button style using the requested color */
+    /* for active buttton */
+    .btn-custom-action {
+        background-color: #FCB045;
+        color: #333; /* Dark text for contrast */
+        border-color: #e69d38;
+        font-weight: 500;
+        transition: all 0.2s ease-in-out;
+    }
+ 
+        .btn-custom-action:hover {
+            background-color: #e69d38; /* Slightly darker on hover */
+            border-color: #d18a30;
+            color: #000;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+ 
+        .btn-custom-action:focus, .btn-custom-action:active {
+            box-shadow: none !important;
+        }
+ 
+    /* Additional style for a uniform look */
+    .table-actions-col {
+        min-width: 250px; /* Ensure enough space for the buttons */
+    }
+</style>
+ 
+<div class="p-3 bg-light rounded shadow-sm mb-4">
+    <h1><i class="bi bi-people-fill text-primary"></i> User Management</h1>
+    <p class="lead">Manage user activation status</p>
+</div>
+<hr />
+ 
+<table class="table table-hover table-striped">
+    <thead class="table-muted">
+    <tr>
+        <th>ID</th>
+        <th>User ID</th>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Status</th>
+        <th class="table-actions-col">Actions</th> @* Added class for width control *@
+        </tr>
+    </thead>
+<tbody>
+@foreach (var user in Model)
+{
+    <tr class="@(user.Status ? "" : "table-danger")">
+    @* Highlight inactive rows *@
+        <td>@user.Id</td>
+        <td>@user.UserId</td>
+        <td>@user.FirstName @user.LastName</td>
+        <td>@user.Email</td>
+        <td>@user.role?.RoleName</td>
+        <td>
+   @* Display based on the Status property *@
+       @if (user.Status)
+       {
+            <span class="badge bg-success p-2">ACTIVE</span>
+       }
+       else
+       {
+        <span class="badge bg-danger p-2">INACTIVE</span>
+       }
+</td>
+<td>
+@* Combined actions into a visually grouped container *@
+    <div class="btn-group" role="group" aria-label="User Actions">
+ 
+        <form asp-action="ToggleStatus" asp-route-id="@user.Id" method="post" style="display:inline;">
+            <button type="submit"
+                class="btn btn-sm btn-custom-action"
+                onclick="return confirm('Are you sure you want to @(user.Status ? "DEACTIVATE" : "ACTIVATE") user @user.UserId?');">
+                <i class="bi bi-power"></i> @(user.Status ? "Deactivate" : "Activate")
+            </button>
+        </form>
+    </div>
+</td>
+</tr>
+
+}
+
+</tbody>
+</table>

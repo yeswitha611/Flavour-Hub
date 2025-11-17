@@ -1,0 +1,408 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background: #FFFFFF;
+}
+
+.form-control {
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.btn-success {
+    border-radius: 20px;
+    padding: 8px 20px;
+}
+
+.info-section {
+    padding: 20px;
+    background-image: url(/Images/bgHome/bg.2.jpg);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.section-title {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: #8B4513;
+}
+
+.info-section p {
+    font-size: 1rem;
+    color: #333;
+    text-align: center;
+}
+
+
+.social-icons a {
+    font-size: 1.8rem;
+    color: #00008B;
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+    .social-icons a:hover {
+        color: #833AB4;
+        transform: scale(1.2);
+    }
+
+/* Hide all main text content inside the slider */
+.carousel-caption {
+    display: none !important;
+}
+
+/* Modern Navbar Styling */
+.navbar {
+    background: #ED9B68 !important;
+        / /* NEW SOLID COLOR BACKGROUND */ /*pink*/
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 12px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* ----------------------------------------------------------- */
+/* 2. FORCE WHITE TEXT FOR ALL NAVBAR ELEMENTS */
+/* ----------------------------------------------------------- */
+nav.navbar .navbar-brand {
+    color: #FFFFFF !important; /* White color for "Flavour Hub" */
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+nav.navbar .navbar-nav .nav-link {
+    color: #333333 !important; /* grey  text for "Home", "Menu", "Login", etc. */
+    transition: color 0.3s ease;
+    
+    /* --- ADDED: Increase size for navigation links --- */
+    font-size: 1.1rem; /* Starting suggestion: 1.1rem (around 17.6px). Adjust as needed. */
+}
+
+    nav.navbar .navbar-nav .nav-link:hover {
+        color: #FFFFFF !important; /* white on hover */
+    }
+
+    /* Ensure icons (like the shopping cart) are blue */
+    nav.navbar .navbar-nav .nav-link i.fas {
+        color: #000080 !important;
+    }
+
+/* ----------------------------------------------------------- */
+/* 3. FIX FOR BOOTSTRAP TOGGLE ICON ON DARK BACKGROUNDS */
+/* ----------------------------------------------------------- */
+/* Ensures the hamburger icon is visible on mobile */
+.navbar-toggler-icon {
+    filter: invert(1);
+}
+
+/* ----------------------------------------------------------- */
+/* FOOTER STYLING: Apply Theme */
+/* ----------------------------------------------------------- */
+
+/* Force background color */
+nav.navbar.bg-dark-blue,
+footer.bg-dark-blue {
+    background-color: #ED9B68 !important; /* pink */
+    background-image: none !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+    /* Style the links inside the dark blue footer */
+    footer.bg-dark-blue a {
+        color: #FFFFFF !important; /* white for visibility */
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+        footer.bg-dark-blue a:hover {
+            color: #FFFFFF !important; /* White on hover */
+            text-decoration: underline;
+        }
+
+/* Add this new rule to your stylesheet */
+.container {
+    flex-grow: 1; /* Allows the main content area to expand and push the footer down */
+}
+
+/* Ensure the footer is the final element */
+.footer {
+    flex-shrink: 0; /* Prevents the footer from shrinking */
+    width: 100%;
+    background: radial-gradient(circle,rgba(207, 66, 66, 1) 0%, rgba(112, 17, 10, 1) 100%);
+    /* You may need to remove any fixed height/positioning from the footer in your shared layout */
+}
+
+/* Existing .btn-success styles */
+.btn-success {
+    border-radius: 20px;
+    padding: 8px 10px; /* This is already a reasonable size, but we'll refine for the login page */
+    /* ... existing styles ... */
+}
+
+/* Remove or modify this if it's making your buttons too large globally */
+/* @media (min-width: 768px) {
+     .btn-lg {
+        padding: .5rem 1rem; // Example default smaller override if it's too big
+        font-size: 1rem;
+        border-radius: .3rem;
+    }
+} */
+
+
+/* Wrapper for centering the now-smaller buttons */
+.login-button-wrapper {
+    display: flex;
+    justify-content: center; /* Center the button horizontally */
+    margin-bottom: 15px; /* Add some space below the button */
+}
+
+    /* Target and size the buttons themselves */
+    .login-button-wrapper .interactive-btn {
+        /* Define a fixed, smaller width */
+        width: 150px; /* Adjust this value (e.g., 120px, 180px) to control the width */
+        /* Ensure only padding dictates the height (removed fixed height) */
+        padding: 10px 20px;
+        font-size: 1rem;
+        /* Overwrite any full-width defaults */
+        display: inline-block;
+        /* Maintain other button styles */
+        border-radius: 25px;
+        font-weight: bold;
+        text-transform: uppercase;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    /* Ensure the main login button has a bottom margin */
+    .login-button-wrapper:first-of-type {
+        margin-bottom: 15px; /* Space between the login button and the 'New User' text */
+    }
+
+/* --- Other Login Page Styling (from previous response, ensure these are present) --- */
+
+.login-container {
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease-out;
+}
+
+.login-title {
+    color: #00008B;
+    font-weight: 600;
+}
+
+.login-input-group .form-control {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .login-input-group .form-control:focus {
+        border-color: #00008B;
+        box-shadow: 0 0 0 0.2rem rgba(0, 0, 139, 0.25);
+    }
+
+.interactive-btn {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+    .interactive-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .interactive-btn:active {
+        transform: translateY(1px);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+.register-prompt {
+    font-size: 0.95rem;
+    color: #333;
+    margin-bottom: 5px !important;
+    text-align: center; /* Ensure text remains centered */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Ensure the main card is the positioning context for its children */
+.food-item-card {
+    position: relative;
+    overflow: hidden; /* CRITICAL: Hide the tooltip content initially */
+    z-index: 1;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, z-index 0.1s;
+    cursor: pointer; /* Indicate it's interactive */
+}
+
+/* Tooltip container - Hidden by default and ready to cover the card */
+.full-description-tooltip {
+    /* 1. POSITIONING: Cover the entire card area */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* 2. APPEARANCE */
+    background-color: #fff; /* White background to cover existing content */
+    padding: 1rem;
+    border-radius: 0.25rem; /* Match card border-radius */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Enhanced shadow for pop effect */
+    /* 3. HIDING/ANIMATION: Start completely transparent and slightly scaled down */
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.8); /* Start smaller */
+    transition: opacity 0.3s ease-out, visibility 0.3s ease-out, transform 0.3s ease-out;
+    z-index: 10; /* Appears above card-body */
+    pointer-events: none; /* Prevents blocking clicks when hidden */
+    /* Content Layout - Adjusted for a cleaner vertical stack */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align content to top */
+    align-items: center;
+    text-align: center;
+}
+
+    /* No `::after` pointer needed for this effect, as it's covering the card. */
+
+    /* Specific elements within the tooltip */
+    .full-description-tooltip .tooltip-img {
+        height: 40%; /* Take up a percentage of the tooltip height */
+        width: 100%;
+        object-fit: cover;
+        margin-bottom: 0.75rem;
+        border-radius: 0.25rem;
+    }
+
+    .full-description-tooltip .tooltip-name {
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 0.5rem;
+    }
+
+    .full-description-tooltip .tooltip-description {
+        font-size: 0.9rem;
+        line-height: 1.4;
+        text-align: center; /* Center the description text */
+        overflow-y: auto; /* Allow scrolling if description is too long */
+        flex-grow: 1; /* Allow it to take remaining vertical space */
+    }
+/* --- D. Click Effect (Controlled by JavaScript) --- */
+
+.food-item-card.tooltip-active {
+    z-index: 5; /* Bring the active card to the front */
+    transform: scale(1.05); /* Zoom out the entire card slightly */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.35); /* Stronger shadow for the popped-out effect */
+}
+
+    .food-item-card.tooltip-active .full-description-tooltip {
+        /* SHOW THE TOOLTIP: Cover the card content with a zoom-in effect */
+        opacity: 1;
+        visibility: visible;
+        transform: scale(1); /* Zoom to full size */
+        pointer-events: auto; /* Re-enable interaction on the tooltip content */
+    }
+
+    /* Hide the original card content when the tooltip is active */
+    .food-item-card.tooltip-active .card-body,
+    .food-item-card.tooltip-active .card-img-top {
+        opacity: 0;
+        transition: opacity 0.3s ease-out;
+    }
+
+/* ========================================================== */
+/* 5. ADMIN DASHBOARD & LOGIN STYLING */
+/* ========================================================== */
+
+/* ?? ADMIN DASHBOARD FONT SCOPING ?? */
+.admin-dashboard {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+    .admin-dashboard .display-4,
+    .admin-dashboard .card-title {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: 600;
+    }
+
+/* Dashboard Card Base Styles */
+.dashboard-card {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border-radius: 0.5rem;
+}
+
+    .dashboard-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2) !important;
+        cursor: pointer;
+    }
+/* New Style to Italicize the Dashboard Title */
+.dashboard-title-style {
+    font-style: italic;
+    font-weight: 600; /* Keep the bold look */
+}
+
+/* Style to force centering of the title inside its container */
+.center-dashboard-heading {
+    /* The d-flex container is only used for the log-in badge, so we can center the entire flexbox */
+    justify-content: center !important;
+}
+/* Custom Background Colors (Legacy) */
+.bg-categories {
+    background-color: #38c172 !important;
+    color: white !important;
+}
+
+.bg-fooditems {
+    background-color: #3490dc !important;
+    color: white !important;
+}
+
+.bg-orders {
+    background-color: #e3342f !important;
+    color: white !important;
+}
+
+.bg-users {
+    background-color: #ffed4a !important;
+    color: #333 !important;
+}
+/* Custom Warm Tan Color (Used for all dashboard cards) */
+.bg-warm-tan {
+    background-color: #F5C58E !important;
+    color: #333333 !important;
+}

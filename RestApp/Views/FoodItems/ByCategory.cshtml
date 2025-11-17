@@ -1,0 +1,331 @@
+﻿@model List<restapp.Models.FoodItem>
+
+<style>
+    /* 1. CSS to visually mark unavailable items */
+    .unavailable-item {
+        opacity: 0.6; /* Dim the card visually */
+        pointer-events: none; /* Blocks ALL clicks on the card itself */
+        cursor: not-allowed; /* Show a "no entry" cursor */
+        filter: grayscale(80%); /* Makes the image/card look drab/unavailable */
+    }
+
+        /* 🛑 CRITICAL FIX: Force block on all elements inside the unavailable card */
+        .unavailable-item * {
+            pointer-events: none !important;
+        }
+
+    /* We only want a pointer cursor when the item is actually available */
+    .food-item-card:not(.unavailable-item) {
+        cursor: pointer;
+        position: relative; /* Base for tooltip positioning */
+        overflow: hidden;
+    }
+
+    /* Tooltip Styles for Popover Effect */
+    .full-description-tooltip {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        display: none; /* Initially hidden, controlled by display/opacity/transform */
+        pointer-events: auto;
+        background-color: rgba(255, 255, 255, 0.98); /* Less transparent background */
+        backdrop-filter: blur(2px);
+        overflow-y: auto;
+        padding: 1rem;
+        
+        /* === MODIFIED: Zoom-Out Animation Properties === */
+        opacity: 0;
+        transform: scale(0.9); /* Start slightly zoomed in (smaller) */
+        transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        /* ============================================== */
+    }
+   
+
+    /* When the card is active, SHOW and ZOOM OUT the tooltip */
+    .food-item-card.tooltip-active .full-description-tooltip {
+        display: block; /* Show the container */
+        opacity: 1; /* Make it fully visible */
+        transform: scale(1); /* Zoom out to original size */
+    }
+    
+    /* Ensure only the tooltip-active class controls visibility for the animation */
+    .food-item-card:not(.tooltip-active) .full-description-tooltip {
+         display: none;
+    }
+    
+    /* Styles for content inside the tooltip */
+    .full-description-tooltip .tooltip-img {
+        height: 50%; /* Make the image take up half the vertical space */
+        width: 100%;
+        object-fit: cover;
+        margin-bottom: 0.75rem;
+    }
+
+    .full-description-tooltip .tooltip-description {
+        font-size: 0.9rem;
+        line-height: 1.4;
+        text-align: center;
+        flex-grow: 1;
+    }
+
+    .unavailable-label {
+        color: #dc3545;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+    }
+    /* Style for the Category Heading */
+    .category-page-heading {
+        color: #800000;
+        font-weight: 600;
+        font-style: italic; /* Slant style */
+        font-size: 3.0rem; 
+        
+        font-family: serif;
+    }
+    /* Custom style for the 'Back to Menu' button */
+    .back-to-menu-btn {
+        /* Use a custom color closer to the Flavour Hub theme orange */
+        background-color: #f6993f !important; /* A light orange/peach */
+        color: #333 !important; /* Dark text for contrast */
+        border-color: #f6993f !important;
+        font-weight: bold;
+        border-radius: 0.5rem; /* Slightly rounded corners */
+        transition: background-color 0.2s;
+    }
+    .back-to-menu-btn:hover {
+        background-color: #e5872d !important; /* Slightly darker on hover */
+        border-color: #e5872d !important;
+    }
+</style>
+
+@* back to meu option *@
+<div class="mb-3">
+    <a href="@Url.Action("Menu", "Home")" class="btn btn-sm back-to-menu-btn shadow-sm">
+        ← Back to Menu
+    </a>
+    <div class="text-center mt-3">
+        <h2 class="display-5 fw-bold category-page-heading">
+            @* Display the value set in the controller *@
+            @ViewData["CategoryName"] 
+        </h2>
+        <hr class="w-25 mx-auto" style="border-color: #f6993f;" />
+    </div>
+</div>
+
+@if (Model != null && Model.Count > 0)
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+        @foreach (var item in Model)
+        {
+            // C# LOGIC: Check availability and set classes/variables
+            bool isAvailable = item.IsAvailable;
+            string cardClass = isAvailable ? "shadow-sm" : "unavailable-item";
+            int currentQuantity = 0; // Placeholder for cart quantity
+
+            //describes the items that should  be on the tool tip card
+            <div class="col"> 
+            <div class="card h-100 @cardClass rounded-4 food-item-card" 
+             data-full-desc="@item.ItemDescription"
+             data-item-name="@item.ItemName"
+             data-item-image="@Url.Content(item.ItemImagePath)">
+        
+                @* This is the visible card content *@
+                <img src="@Url.Content(item.ItemImagePath)" class="card-img-top img-fluid rounded-top-4" alt="@item.ItemName" style="height:200px; object-fit:cover;" />
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+
+                            @* Veg/Non-Veg Indicator *@
+                            @if (item.itemType?.ItemTypeName == "Veg")
+                            {
+                                <span class="d-inline-flex align-items-center gap-2">
+                                    <span class="d-inline-block border border-success rounded" style="width: 20px; height: 20px; line-height: 18px; text-align: center;">
+                                        <span class="bg-success rounded-circle d-inline-block" style="width: 10px; height: 10px;"></span>
+                                    </span>
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="d-inline-flex align-items-center gap-2">
+                                    <span class="d-inline-block border border-danger rounded" style="width: 20px; height: 20px; line-height: 18px; text-align: center;">
+                                        <span class="text-danger fw-bold" style="font-size: 1.4rem;">▵</span>
+                                    </span>
+                                </span>
+                            }
+
+                            @* Rating Display *@
+                            @if (!string.IsNullOrWhiteSpace(item.Rating) && item.RatingCount > 0)
+                            {
+                                var ratingValue = Convert.ToDouble(item.Rating);
+                                var starColor = ratingValue > 6 ? "#d4ac0d" : "#ffc107";
+                                <span class="d-inline-flex align-items-center gap-1">
+                                    <i class="bi bi-star-fill" style="color:@starColor;">★</i> @item.Rating
+                                    <small class="text-muted">(@item.RatingCount ratings)</small>
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">No ratings yet</span>
+                            }
+                        </div>
+
+                        <h5 class="card-title">@item.ItemName</h5>
+
+                        @* Display availability status *@
+                        @if (!isAvailable)
+                        {
+                            <p class="unavailable-label mb-2">Unavailable</p>
+                        }
+
+                        <p class="card-text short-description-text">
+                            @(item.ItemDescription.Length > 30 ? item.ItemDescription.Substring(0, 30) + "..." : item.ItemDescription)
+                        </p>
+
+                        <p class="card-text mb-2">
+                            <strong>Price:</strong><br />
+                            <span class="text-muted text-decoration-line-through">₹@item.ActualPrice</span><br />
+                            <span class="text-success">@item.DiscountPer% off</span>
+                        </p>
+
+                        @* Selling Price and Add Button Side by Side *@
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold fs-5 mb-0">₹@item.SellingPrice</span>
+
+                            <div class="quantity-control-container">
+
+                                @if (!isAvailable)
+                                {
+                                    // Item is deactivated/unavailable by Admin
+                                        <button class="btn btn-danger btn-sm" disabled>Out of Stock</button>
+                                    }
+                                    else if (currentQuantity == 0)
+                                    {
+                                        
+                                            <form asp-controller="User" asp-action="AddToCartSubmit" method="post" style="display:inline;">
+                                            <input type="hidden" name="id" value="@item.ItemId" /> @* Note: Changed from itemId to id to match controller parameter *@
+                                            <input type="hidden" name="returnUrl" value="@(Context.Request.Path + Context.Request.QueryString)" />
+                                            <button type="submit" class="btn btn-success btn-sm">Add</button>
+                                            </form>
+                                        }
+                                         
+                                      
+                                    
+                                else
+                                {
+                                    // --- B. Quantity Selector (Visible when Q > 0) - This uses placeholder actions ---
+                                    <div class="quantity-selector" data-item-id="@item.ItemId">
+
+                                        <form asp-controller="User" asp-action="RemoveFromCartSubmit" method="post" style="display: inline;">
+                                            <input type="hidden" name="itemId" value="@item.ItemId" />
+                                            <button type="submit" class="btn btn-outline-secondary btn-sm quantity-btn decrement-btn">
+                                                @if (currentQuantity == 1)
+                                                {
+                                                    <i class="bi bi-trash"></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="bi bi-dash"></i>
+                                                }
+                                            </button>
+                                        </form>
+
+                                        <span class="item-quantity px-2">@currentQuantity</span>
+
+                                        <form asp-controller="User" asp-action="AddToCartSubmit" method="post" style="display: inline;">
+                                            <input type="hidden" name="itemId" value="@item.ItemId" />
+                                            <button type="submit" class="btn btn-outline-secondary btn-sm quantity-btn increment-btn">
+                                                <i class="bi bi-plus"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                @* --- MODIFIED: Tooltip content with Close Button --- *@
+                <div class="full-description-tooltip bg-white rounded-4 shadow-lg d-flex flex-column align-items-center text-center">
+                    <button class="btn-close close-tooltip position-absolute" style="top: 10px; right: 10px;" aria-label="Close"></button>
+                    
+                    <img class="tooltip-img img-fluid rounded-4" alt="" />
+                    <h6 class="tooltip-name mt-2 mb-1"></h6>
+                    <p class="tooltip-description p-3 mb-0 text-dark"></p>
+                </div>
+                @* -------------------------------------------------- *@
+            </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p class="text-center text-muted">No food items found in this category.</p>
+}
+
+<script>
+    document.querySelectorAll('.food-item-card').forEach(card => {
+        
+        const fullDescription = card.getAttribute('data-full-desc');
+        const itemName = card.getAttribute('data-item-name');
+        const itemImage = card.getAttribute('data-item-image');
+        const tooltip = card.querySelector('.full-description-tooltip');
+
+        if (tooltip) {
+            tooltip.querySelector('.tooltip-img').src = itemImage || '';
+            tooltip.querySelector('.tooltip-img').alt = itemName || 'Food Item';
+            tooltip.querySelector('.tooltip-name').textContent = itemName || '';
+            tooltip.querySelector('.tooltip-description').textContent = fullDescription || '';
+        }
+        
+        // Add click listener to the entire card
+        card.addEventListener('click', function (event) {
+            
+            // 1. Check if the CLOSE button was clicked OR if the item is unavailable
+            if (event.target.classList.contains('close-tooltip') || card.classList.contains('unavailable-item')) {
+                card.classList.remove('tooltip-active');
+                event.preventDefault();
+                event.stopPropagation();
+                return;
+            }
+
+            // 2. INTERACTIVE ELEMENT CHECK (CRITICAL FIX)
+            // Prevent the tooltip from opening if the user clicks any form element, button, or anchor (Add/Quantity controls)
+            const clickedElement = event.target;
+            const isControl = clickedElement.closest('form, button, a');
+
+            if (isControl && !clickedElement.classList.contains('food-item-card')) {
+                // Allow the form/button to execute its action (e.g., add to cart)
+                event.stopPropagation();
+                return; 
+            }
+
+            // 3. MAIN LOGIC: Toggle the tooltip
+            event.preventDefault(); 
+            event.stopPropagation();
+
+            // Close other open tooltips
+            document.querySelectorAll('.food-item-card.tooltip-active').forEach(otherCard => {
+                if (otherCard !== card) {
+                    otherCard.classList.remove('tooltip-active');
+                }
+            });
+            
+            // Toggle the current card's tooltip active class (opens the zoom-out)
+            card.classList.toggle('tooltip-active');
+        });
+
+        // 4. Document Click to Hide (Crucial for closing the tooltip)
+        document.addEventListener('click', function (event) {
+            if (card.classList.contains('tooltip-active') && !card.contains(event.target)) {
+                // If the card is active and the click is outside it, close the tooltip
+                card.classList.remove('tooltip-active');
+            }
+        });
+    });
+</script>

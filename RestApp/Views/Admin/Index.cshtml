@@ -1,0 +1,92 @@
+﻿@{
+
+    ViewData["Title"] = "Admin Dashboard";
+
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+ 
+<div class="admin-dashboard">
+    <div class="text-center">
+        <h1 class="display-4 dashboard-title-style">Dashboard</h1>
+    </div>
+    
+    <div class="text-end mb-4" style="margin-top: -30px;">
+        <span class="badge bg-secondary p-2">Logged in as: @ViewBag.loggedInUserId</span>
+    </div>
+
+<hr />
+ 
+    <div class="row justify-content-center">
+</div>
+ 
+<div class="row justify-content-center">
+</div>
+</div>
+ 
+<div class="row justify-content-center">
+ 
+    @* Card 1: Total Categories (Warm Tan) *@
+<div class="col-lg-4 col-md-6 mb-4">
+    <div class="card border-0 shadow-sm text-center dashboard-card bg-warm-tan">
+        <div class="card-body">
+            <i class="bi bi-tag-fill display-4 mb-3"></i>
+            <h5 class="card-title text-uppercase mb-2">Total Categories</h5>
+            <p class="h1 mb-0">@ViewBag.TotalCategories</p>
+            <a asp-controller="Categories" asp-action="Index" class="btn btn-sm btn-light mt-3 d-block">Manage Categories &raquo;</a>
+        </div>
+    </div>
+</div>
+ 
+@* Card 2: Total Food Items (Warm Tan) *@
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card border-0 shadow-sm text-center dashboard-card bg-warm-tan">
+            <div class="card-body">
+                <i class="bi bi-box-seam display-4 mb-3"></i>
+                <h5 class="card-title text-uppercase mb-2">Total Food Items</h5>
+                <p class="h1 mb-0">@ViewBag.TotalFoodItems</p>
+                <a asp-controller="FoodItems" asp-action="Index" class="btn btn-sm btn-light mt-3 d-block">Manage Items &raquo;</a>
+            </div>
+        </div>
+    </div>
+ 
+    @* Card 3: Total Users (Warm Tan) *@
+<div class="col-lg-4 col-md-6 mb-4">
+    <div class="card border-0 shadow-sm text-center dashboard-card bg-warm-tan">
+        <div class="card-body">
+            <i class="bi bi-people-fill display-4 mb-3"></i>
+            <h5 class="card-title text-uppercase mb-2">Registered Users</h5>
+            <p class="h1 mb-0">@ViewBag.TotalUsers</p>
+            <a asp-controller="UserManager" asp-action="Index" class="btn btn-sm btn-light mt-3 d-block">Manage Users &raquo;</a>
+        </div>
+    </div>
+</div>
+</div>
+ 
+<div class="row justify-content-center">
+ 
+@* Card 4: Total Sliders (Warm Tan) *@
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card border-0 shadow-sm text-center dashboard-card bg-warm-tan">
+            <div class="card-body">
+                <i class="bi bi-images display-4 mb-3"></i>
+                <h5 class="card-title text-uppercase mb-2">Sliders</h5>
+                <a asp-controller="Sliders" asp-action="Index" class="btn btn-sm btn-light mt-3 d-block">Manage Sliders &raquo;</a>
+            </div>
+        </div>
+    </div>
+    
+    @* Card 5: Total orders(Warm Tan) *@
+<div class="col-lg-4 col-md-6 mb-4">
+    <div class="card border-0 shadow-sm text-center dashboard-card bg-warm-tan">
+        <div class="card-body">
+            <i class="bi bi-people-fill display-4 mb-3"></i>
+            <h5 class="card-title text-uppercase mb-2">Total Orders</h5>
+            <p class="h1 mb-0">@ViewBag.TotalOrders</p>
+            
+        </div>
+    </div>
+</div>
+
+</div>
+ 

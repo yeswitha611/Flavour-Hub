@@ -1,0 +1,120 @@
+﻿@using restapp.Services
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<style>
+    /* Custom styles for the Featured Items Section */
+    .featured-section-card {
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .featured-section-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+    }
+    .theme-accent-text {
+        color: #e5872d; /* Darker orange from your theme */
+    }
+    .theme-btn-primary {
+        background-color: #f6993f; /* Lighter theme orange */
+        color: #333;
+        border: 1px solid #e5872d;
+    }
+    .theme-btn-primary:hover {
+        background-color: #e5872d;
+        color: #fff;
+    }
+</style>
+
+<div class="container-xxl mt-4">
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Flavour Hub</h5>
+                    <p>Diwali Feast</p>
+                </div>
+            </div>
+            </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+
+    
+    <div class="container py-5 text-center">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-10">
+                <h3 class="display-6 fw-bold theme-accent-text">
+                    ⭐ Our Menu Highlights ⭐
+                </h3>
+                <p class="lead text-muted">
+                    Explore our top-rated dishes, Family comobs, and fan favourites that keep everyone coming back for more.
+                </p>
+            </div>
+        </div>
+
+        <div class="row justify-content-center g-4">
+            
+            <div class="col-md-4 col-lg-3">
+                <div class="p-4 rounded-4 shadow featured-section-card h-100" style="background-color: #FFFACD;">
+                    <i class="bi bi-award fs-1 mb-2 theme-accent-text"></i>
+                    <h5 class="fw-bold">Top Rated Dishes</h5>
+                    <p class="text-muted small">See what over 1000 happy customers recommend.</p>
+                    @* here the action toprateditems in fooditems controller *@
+                    <a href="@Url.Action("TopRatedItems", "FoodItems")" class="btn btn-sm theme-btn-primary mt-2">
+                        View Bestsellers
+                    </a>
+                </div>
+            </div>
+
+           <div class="col-md-4 col-lg-3">
+                <div class="p-4 rounded-4 shadow featured-section-card h-100" style="background-color: #fff; border: 2px solid #f6993f;">
+                    <i class="bi bi-gem fs-1 mb-2 text-success"></i>
+                    <h5 class="fw-bold">Seasonal Delights</h5>
+                    <p class="text-muted small">New limited-time items using fresh, seasonal ingredients.</p>
+                    
+                    <a href="@Url.Action("ByCategory", "FoodItems", new { categoryId = 4 })" class="btn btn-sm btn-outline-success mt-2">
+                        Treats
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+                <div class="p-4 rounded-4 shadow featured-section-card h-100" style="background-color: #FFFACD;">
+                    <i class="bi bi-basket fs-1 mb-2 theme-accent-text"></i>
+                    <h5 class="fw-bold">Family Deals</h5>
+                    <p class="text-muted small">Great value combos perfect for sharing with friends and family.</p>
+                    
+                    <a href="@Url.Action("ByCategory", "FoodItems", new { categoryId = 11 })" class="btn btn-sm theme-btn-primary mt-2">
+                        Explore Combos
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section id="about" class="info-section mt-5 text-center">
+        <h2 class="section-title mx-auto">About Us</h2>
+        <p class="mx-auto" style="max-width: 600px;">
+            Welcome to <strong>Flavour Hub</strong>! We specialize in authentic flavors and
+            a delightful dining experience. Our mission is to bring traditional recipes to your table
+            with a modern twist.
+        </p>
+    </section>
+
+    <section id="contact" class="info-section mt-4">
+        <h2 class="section-title">Contact Us</h2>
+        <p>Email: <a href="mailto:info@flavourhub.com">info@flavourhub.com</a></p>
+        Phone: +91 98765 43210</p>
+        <p>Address: 123, Food Street, Chennai, TN</p>
+
+    <div class="social-icons mt-3">
+            <a href="https://instagram.com" target="_blank" class="me-3"><i class="bi bi-instagram"></i></a>
+        </div>
+    </section>
+
+</div>
